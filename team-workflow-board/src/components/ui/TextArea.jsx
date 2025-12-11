@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-export default function TextArea({ id, label, value, onChange, placeholder, rows = 4, ...rest }) {
+export default function TextArea({ id, label, value = "", onChange, placeholder = "", rows = 4, ...rest }) {
   return (
-    <label className="form-group">
-      <span style={{ fontSize: 13, marginBottom: 6 }}>{label}</span>
+    <label className="form-group" htmlFor={id}>
+      {label && <span style={{ fontSize: 13, marginBottom: 6 }}>{label}</span>}
       <textarea
         id={id}
         rows={rows}
