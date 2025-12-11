@@ -50,7 +50,7 @@ A modern **task management board** built with React and vite. This app allows te
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/team-workflow-board.git
+   git clone https://github.com/Arun-2005-cyber/team-workflow-board-Ever-Quint
    cd team-workflow-board
 
 2. **Install dependencies**
