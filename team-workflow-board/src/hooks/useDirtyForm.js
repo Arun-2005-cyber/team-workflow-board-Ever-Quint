@@ -1,24 +1,24 @@
-import { useState, useEffect, useCallback } from 'react';
+// hooks/useDirtyForm.js (final)
+import { useState, useEffect, useRef, useCallback } from 'react';
+import isEqual from 'lodash/isEqual';
 
-/**
- * useDirtyForm(initialValues)
- * - returns { values, setValues, reset, dirty }
- * - tracks whether current values differ from initial
- */
 export default function useDirtyForm(initialValues) {
-  const [values, setValues] = useState(initialValues);
-  const [initial, setInitial] = useState(initialValues);
+  const clone = (v) => (v && typeof v === 'object' ? JSON.parse(JSON.stringify(v)) : v);
+
+  const [values, setValues] = useState(() => clone(initialValues));
+  const initialRef = useRef(clone(initialValues));
   const [dirty, setDirty] = useState(false);
 
   useEffect(() => {
-    setDirty(JSON.stringify(values) !== JSON.stringify(initial));
-  }, [values, initial]);
+    setDirty(!isEqual(values, initialRef.current));
+  }, [values]);
 
   const reset = useCallback((nextInitial) => {
-    setInitial(nextInitial);
-    setValues(nextInitial);
+    const n = clone(nextInitial);
+    initialRef.current = n;
+    setValues(n);
     setDirty(false);
   }, []);
 
-  return { values, setValues, reset, dirty, setInitial };
+  return { values, setValues, reset, dirty };
 }
